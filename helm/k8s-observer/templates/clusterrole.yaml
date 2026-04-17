@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: k8s-observer-read
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "events", "persistentvolumeclaims", "resourcequotas", "nodes"]
+    verbs: ["get", "list", "watch"]
+

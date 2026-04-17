@@ -1,0 +1,86 @@
+[
+  {
+    "name": "pvc-pending-and-quota-pressure",
+    "summary": {
+      "namespace": "payments",
+      "pod_signals": [
+        {
+          "name": "payment-api-7c54",
+          "phase": "Running",
+          "restarts": 0,
+          "waiting_reasons": []
+        }
+      ],
+      "pvc_signals": [
+        {
+          "name": "payments-data",
+          "phase": "Pending",
+          "storage_class": "standard-rwo",
+          "requested_storage": "50Gi"
+        }
+      ],
+      "quota_signals": [
+        {
+          "name": "payments-quota",
+          "hard": {
+            "requests.storage": "100Gi"
+          },
+          "used": {
+            "requests.storage": "98Gi"
+          }
+        }
+      ],
+      "warning_events": [
+        {
+          "reason": "FailedScheduling",
+          "count": 3,
+          "sample_message": "0/3 nodes are available"
+        }
+      ],
+      "node_pressure_signals": [
+        "gke-node-1:DiskPressure"
+      ],
+      "source_mode": "observer",
+      "llm_summary": null
+    },
+    "expected_signals": [
+      "pvc_pending",
+      "storage_quota_high",
+      "warning_events_present",
+      "node_pressure_present"
+    ]
+  },
+  {
+    "name": "crashloop-restart-pattern",
+    "summary": {
+      "namespace": "frontend",
+      "pod_signals": [
+        {
+          "name": "web-68f8d",
+          "phase": "Running",
+          "restarts": 9,
+          "waiting_reasons": [
+            "CrashLoopBackOff"
+          ]
+        }
+      ],
+      "pvc_signals": [],
+      "quota_signals": [],
+      "warning_events": [
+        {
+          "reason": "BackOff",
+          "count": 5,
+          "sample_message": "Back-off restarting failed container"
+        }
+      ],
+      "node_pressure_signals": [],
+      "source_mode": "pull",
+      "llm_summary": null
+    },
+    "expected_signals": [
+      "pods_restarting",
+      "crashloop_pattern",
+      "warning_events_present"
+    ]
+  }
+]
