@@ -1,0 +1,42 @@
+image:
+  repository: k8s-observer-poc
+  tag: latest
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 8080
+
+llm:
+  summaryMode: none # none | ollama | external
+  failOpen: true
+  baseUrl: "http://ollama:11434"
+  model: "qwen2.5:0.5b"
+  timeoutSeconds: 12
+  healthPath: ""
+
+cache:
+  enabled: true
+  ttlSeconds: 30
+  staleSeconds: 120
+  maxEntries: 200
+  prefetchEnabled: false
+  prefetchNamespaces: ""
+  prefetchIntervalSeconds: 15
+
+llmSummaryCache:
+  enabled: true
+  ttlSeconds: 60
+  maxEntries: 500
+
+probes:
+  liveness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readiness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+resources: {}

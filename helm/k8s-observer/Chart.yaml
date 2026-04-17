@@ -1,0 +1,6 @@
+apiVersion: v2
+name: k8s-observer
+description: Kubernetes namespace aggregation observer POC
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
